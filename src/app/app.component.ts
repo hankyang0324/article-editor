@@ -12,6 +12,7 @@ export class AppComponent implements AfterViewInit {
   title = 'article-editor';
   editPage = false;
   @ViewChild('container') container: ElementRef;
+  @ViewChild('btn') btn: ElementRef;
 
   constructor(private router: Router) {
     router.events.subscribe((event) => {
@@ -22,6 +23,10 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    highed.Editor(this.container.nativeElement);
+    console.log(highed);
+    // highed.Editor(this.container.nativeElement);
+    highed.ModalEditor(this.btn.nativeElement, {}, function (html: any) {
+      console.log('finished');
+    });
   }
 }

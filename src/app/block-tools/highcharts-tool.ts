@@ -39,12 +39,14 @@ export class HighchartsTool implements BlockTool {
 
   render() {
     this.wrapper = document.createElement('div');
+    this.wrapper.style.height = '600px';
+    // this.wrapper.style.width = '1440px';
 
     if (this.readOnly) {
       // Render a read-only version of the chart
     } else {
       this.wrapper.classList.add('highcharts-editor-container');
-      this.editor = highed.Editor(this.wrapper);
+      setTimeout(() => (this.editor = highed.Editor(this.wrapper)));
     }
 
     return this.wrapper;

@@ -1,3 +1,4 @@
 <a [routerLink]="['/editor']" *ngIf="!editPage">nav to article edit page</a>
-<div class="chart-editor-container" #container *ngIf="!editPage"></div>
+<!-- <div class="chart-editor-container" #container *ngIf="!editPage"></div> -->
+<div><button #btn *ngIf="!editPage">create chart</button></div>
 <router-outlet></router-outlet>
