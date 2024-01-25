@@ -23,14 +23,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "less",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/highcharts/css/highcharts.css",
+              "src/vendor/highcharts-editor/v030/highcharts-editor.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/highcharts/highcharts.js",
+              "src/vendor/highcharts-editor/v030/highcharts-editor.complete.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -91,13 +93,8 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "less",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.less"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.less"],
             "scripts": []
           }
         }
