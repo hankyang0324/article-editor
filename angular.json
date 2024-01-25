@@ -27,9 +27,10 @@
             "styles": [
               "src/styles.less",
               "node_modules/highcharts/css/highcharts.css",
-              "src/vendor/highcharts-editor/v021/highcharts-editor.min.css"
+              "src/vendor/highcharts-editor/v022/highcharts-editor.min.css"
             ],
             "scripts": [
+              "src/vendor/highcharts-editor/v022/highcharts-editor.complete.js",
               "node_modules/highcharts/highstock.js",
               "node_modules/highcharts/highcharts-more.js",
               "node_modules/highcharts/highcharts-3d.js",
@@ -37,8 +38,7 @@
               "node_modules/highcharts/modules/exporting.js",
               "node_modules/highcharts/modules/funnel.js",
               "node_modules/highcharts/modules/solid-gauge.js",
-              "node_modules/highcharts/modules/series-label.js",
-              "src/vendor/highcharts-editor/v021/highcharts-editor.complete.js"
+              "node_modules/highcharts/modules/series-label.js"
             ]
           },
           "configurations": {
