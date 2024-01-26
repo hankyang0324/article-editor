@@ -1,14 +1,20 @@
-import EditorJS, {
+import {
   BlockTool,
   BlockToolConstructorOptions,
   BlockToolData,
   API,
 } from '@editorjs/editorjs';
 
+import * as Highcharts from 'highcharts';
+import Data from 'highcharts/modules/data';
+Data(Highcharts);
+
 declare var highed: any;
 
 export interface HighchartsToolData {
   // Define the structure of chart data
+  chartConfig: any;
+  projectConfig: any;
 }
 
 export class HighchartsTool implements BlockTool {
@@ -39,23 +45,79 @@ export class HighchartsTool implements BlockTool {
 
   render() {
     this.wrapper = document.createElement('div');
-    this.wrapper.style.height = '600px';
-    // this.wrapper.style.width = '1440px';
+    const editorContainer = document.createElement('div');
+    const chartContainer = document.createElement('div');
+    const btnContainer = document.createElement('div');
+    const btn = document.createElement('button');
 
-    if (this.readOnly) {
-      // Render a read-only version of the chart
+    btn.style.marginTop = '3px';
+    btnContainer.style.height = '30px';
+    editorContainer.style.height = '600px';
+
+    btnContainer.appendChild(btn);
+    this.wrapper.appendChild(btnContainer);
+    this.wrapper.appendChild(chartContainer);
+    this.wrapper.appendChild(editorContainer);
+
+    btn.addEventListener('click', () => {
+      if (btn.textContent === 'save chart') {
+        btn.textContent = 'edit chart';
+        editorContainer.style.display = 'none';
+        chartContainer.style.height = '400px';
+        chartContainer.style.visibility = 'visible';
+
+        this.data.chartConfig = this.editor.getEmbeddableJSON(); // for chart rendering
+        this.data.projectConfig = this.editor.chart.toProject(); // for importing to chart editor
+        setTimeout(() => {
+          Highcharts.chart(chartContainer, this.data.chartConfig);
+        });
+      } else {
+        btn.textContent = 'save chart';
+        editorContainer.style.display = 'block';
+        chartContainer.style.height = '0';
+        chartContainer.style.visibility = 'hidden';
+
+        if (!this.editor) {
+          setTimeout(() => {
+            this.editor = new highed.Editor(editorContainer);
+            console.log(this.editor);
+            if (this.data.projectConfig) {
+              this.editor.chart.loadProject(this.data.projectConfig);
+            }
+          });
+        }
+      }
+    });
+
+    if (this.data.chartConfig) {
+      btn.textContent = 'edit chart';
+      editorContainer.style.display = 'none';
+      chartContainer.style.height = '400px';
+      chartContainer.style.visibility = 'visible';
+
+      setTimeout(() => {
+        Highcharts.chart(chartContainer, this.data.chartConfig);
+      });
     } else {
-      this.wrapper.classList.add('highcharts-editor-container');
-      setTimeout(() => (this.editor = highed.Editor(this.wrapper)));
+      btn.textContent = 'save chart';
+      editorContainer.style.display = 'block';
+      chartContainer.style.height = '0';
+      chartContainer.style.visibility = 'hidden';
+
+      setTimeout(() => {
+        this.editor = new highed.Editor(editorContainer);
+        console.log(this.editor);
+        if (this.data.projectConfig) {
+          this.editor.chart.loadProject(this.data.projectConfig);
+        }
+      });
     }
 
     return this.wrapper;
   }
 
   save(blockContent: HTMLElement): HighchartsToolData {
-    return {
-      // Return the saved data of the chart
-    };
+    return this.data;
   }
 
   validate(savedData: BlockToolData): boolean {
